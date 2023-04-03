@@ -33,8 +33,8 @@ class API {
       return null;
     }
 
-    final url = Uri.parse('$baseUrl$endPoint');
-    debugPrint('$url');
+    final url = Uri.parse('$endPoint');
+    // debugPrint('api base url. $endPoint');
 
     try {
       if (showLoader) {
@@ -47,7 +47,7 @@ class API {
       }
 
       if (response.statusCode == 200) {
-        debugPrint(response.body);
+        // debugPrint(response.body);
         return response.body;
       } else {
         debugPrint('${response.statusCode}');
