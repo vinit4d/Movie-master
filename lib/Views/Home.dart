@@ -85,14 +85,19 @@ class Home extends StatelessWidget {
                             itemBuilder: (context, index) {
                               return InkWell(
                                 onTap: () {
-                                  Get.to(() => MovieDetails(
+                                  final route = PageRouteBuilder(
+                                    transitionDuration:
+                                        Duration(milliseconds: 1000),
+                                    pageBuilder: (_, __, ___) => MovieDetails(
+                                        idx: index,
                                         movieId: controller
                                                 .searchResults.isNotEmpty
                                             ? controller.searchResults[index]
                                                 ['id']
                                             : controller.trendingMovies[index]
-                                                ['id'],
-                                      ));
+                                                ['id']),
+                                  );
+                                  Navigator.push(context, route);
                                 },
                                 child: Container(
                                   padding: const EdgeInsets.all(20),
@@ -105,27 +110,30 @@ class Home extends StatelessWidget {
                                       ClipRRect(
                                           borderRadius:
                                               BorderRadius.circular(10),
-                                          child: controller
-                                                  .searchResults.isNotEmpty
-                                              ? (controller.searchResults[index]
-                                                          ['poster_path'] !=
-                                                      null
-                                                  ? Image.network(
-                                                      '${imgurl}${controller.searchResults[index]['poster_path']}',
-                                                      width: 100,
-                                                    )
-                                                  : const Text(
-                                                      'Image not found'))
-                                              : (controller.trendingMovies[
-                                                              index]
-                                                          ['poster_path'] !=
-                                                      null
-                                                  ? Image.network(
-                                                      '${imgurl}${controller.trendingMovies[index]['poster_path']}',
-                                                      width: 100,
-                                                    )
-                                                  : const Text(
-                                                      'Image not found'))),
+                                          child: Hero(
+                                              tag: index.toString(),
+                                              child: controller
+                                                      .searchResults.isNotEmpty
+                                                  ? (controller.searchResults[
+                                                                  index]
+                                                              ['poster_path'] !=
+                                                          null
+                                                      ? Image.network(
+                                                          '${imgurl}${controller.searchResults[index]['poster_path']}',
+                                                          width: 100,
+                                                        )
+                                                      : const Text(
+                                                          'Image not found'))
+                                                  : (controller.trendingMovies[
+                                                                  index]
+                                                              ['poster_path'] !=
+                                                          null
+                                                      ? Image.network(
+                                                          '${imgurl}${controller.trendingMovies[index]['poster_path']}',
+                                                          width: 100,
+                                                        )
+                                                      : const Text(
+                                                          'Image not found')))),
                                       const SizedBox(
                                         width: 10,
                                       ),
@@ -191,6 +199,7 @@ class Home extends StatelessWidget {
                                     ],
                                   ),
                                 ),
+                                // ),
                               );
                             })
                       ],

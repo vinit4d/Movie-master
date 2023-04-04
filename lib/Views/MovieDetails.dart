@@ -7,9 +7,11 @@ import '../Controllers/MovieDetailsController.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MovieDetails extends StatelessWidget {
-  MovieDetails({Key? key, required this.movieId}) : super(key: key);
+  MovieDetails({Key? key, required this.movieId, required this.idx})
+      : super(key: key);
   final controller = Get.put(MovieDetailsController());
   final movieId;
+  final idx;
 
   @override
   Widget build(BuildContext context) {
@@ -42,9 +44,12 @@ class MovieDetails extends StatelessWidget {
                             children: [
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(8),
-                                child: Image.network(
-                                  '${imgurl}${controller.movieDetails['poster_path']}',
-                                  width: Get.size.width,
+                                child: Hero(
+                                  tag: idx.toString(),
+                                  child: Image.network(
+                                    '${imgurl}${controller.movieDetails['poster_path']}',
+                                    width: Get.size.width,
+                                  ),
                                 ),
                               ),
                               const SizedBox(
@@ -160,6 +165,7 @@ class MovieDetails extends StatelessWidget {
                         )
                       : const SizedBox(),
                 ),
+                // ),
               ));
         });
   }
